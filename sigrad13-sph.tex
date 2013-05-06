@@ -127,11 +127,11 @@ In this work we propose a method that, while perfoming the raymarching in Cartes
 
 \section{Related Work}
 \label{sec:relatedwork}
-Ehm.. none?
-\Fix{Rendering finite elements directly}
-\Fix{Adaptive resampling schemes, BAT / Octree structures?}
-\Fix{Curvilinear raycasting}
-\Fix{Siggraph Poster}
+To the authors' knowledge, there is no article in the literature employing fundamental spherical symmetry in datasets and evaluating the impact on rendering time and quality due to this coordinate transform. The closest work that has been published deals with 4D ultra-sound visualization, in which the data is stored as a time-varying 3-dimensional polar coordinates format~\cite{bruder11}.
+
+Alternative ways to render these datasets have been proposed. If the underlying simulation is performed on a finite element grid, it is intuitive to render the elements directly and many techniques have been presented to achieve this, c.f.~\cite{ueff10,bock12} among others.
+
+Furthermore, multiresolution schemes, which are usually applied to enable rendering of big datasets, can be easily adjusted to allow for efficient storage of these datasets. This technique would mitigate the problems that arise from radius-dependent voxel densities. A number of techniques have been proposed on this topic, e.g.~\cite{lamar99,weiler00,ljung06}.
 
 \section{Background}
 \label{sec:background}
@@ -189,8 +189,8 @@ and the resulting tuple $(r, \phi, \theta)$ is used to look up the value in the 
 \label{sec:interpolation}
 \begin{figure}
 	\centering
-	\includegraphics[width=\columnwidth]{figures/spherical_interpolation.pdf}
-	\caption{This image shows a 2-dimensional representation of the interpolation scheme that we employ on the spherical data. By using hardware-supported trilinear interpolation on the spherical volume, we achieve an interpolation behavior that is idential with a spherical linear interpolation (SLERP). By linearly interpolating the angle $\phi$, the interpolated values are located on a concentric circle, thereby staying true to the underlying spherical structure of the data. The same holds true for the 3-dimensional case.}
+	\includegraphics[width=0.75\columnwidth]{figures/spherical_interpolation.pdf}
+	\caption{This figure shows a 2-dimensional representation of the interpolation scheme that we employ on the spherical data. By using hardware-supported trilinear interpolation on the spherical volume, we achieve an interpolation behavior that is identical with a spherical linear interpolation (SLERP). By linearly interpolating the angle $\phi$, the interpolated values are located on a concentric circle, thereby staying true to the underlying spherical structure of the data. In the example we want to retrieve the value at the blue sampling location. While the (linear) radial interpolation provides the green values, the interpolation in $\phi$ produces the red values. In this case it is important to note that the weighting factor is not based on the euclidean distance between the red values and the blue sample point, but the weighting factor is regard along the concentric arc connecting the two points. The same holds true for the second angle in the 3-dimensional case.}
 	\label{fig:interpolation}
 \end{figure}
 
